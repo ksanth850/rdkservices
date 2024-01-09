@@ -1,7 +1,6 @@
 project(NetworkManagerInterface)
 find_package(WPEFramework REQUIRED)
 find_package(${NAMESPACE}Core REQUIRED)
-find_package(${NAMESPACE}COM REQUIRED)
 find_package(CompileSettingsDebug CONFIG REQUIRED)
 find_package(ProxyStubGenerator REQUIRED)
 
@@ -11,7 +10,7 @@ if(NOT GENERATOR_SEARCH_PATH)
     set(GENERATOR_SEARCH_PATH ${CMAKE_SYSROOT}${CMAKE_INSTALL_PREFIX}/include/${NAMESPACE})
 endif()
 
-ProxyStubGenerator(INPUT "${CMAKE_CURRENT_SOURCE_DIR}" OUTDIR "${CMAKE_CURRENT_BINARY_DIR}/generated" INCLUDE_PATH ${GENERATOR_SEARCH_PATH})
+#ProxyStubGenerator(INPUT "${CMAKE_CURRENT_SOURCE_DIR}" OUTDIR "${CMAKE_CURRENT_BINARY_DIR}/generated" INCLUDE_PATH ${GENERATOR_SEARCH_PATH})
 
 file(GLOB INTERFACES_HEADERS I*.h)
 list(APPEND INTERFACES_HEADERS Module.h)
@@ -27,11 +26,6 @@ add_library(${TARGET} SHARED
         )
 
 target_include_directories( ${TARGET} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
-
-target_link_libraries(${TARGET}
-        PRIVATE
-                ${NAMESPACE}COM::${NAMESPACE}COM
-        )
 
 target_link_libraries(${TARGET}
         PRIVATE
